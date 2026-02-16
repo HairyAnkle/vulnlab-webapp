@@ -51,3 +51,30 @@ def init_app(app):
         )
         db.commit()
         print("Created admin user: admin / admin123")
+
+    @app.cli.command("seed-lab")
+    def seed_lab_command():
+        db = get_db()
+
+        demo_user = db.execute("SELECT id FROM users WHERE username = ?", ("demo",)).fetchone()
+        if demo_user is None:
+            db.execute(
+                "INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, 0)",
+                ("demo", generate_password_hash("demo123")),
+            )
+            db.commit()
+            demo_user = db.execute("SELECT id FROM users WHERE username = ?", ("demo",)).fetchone()
+
+        note_count = db.execute("SELECT COUNT(*) AS c FROM notes WHERE author_id = ?", (demo_user["id"],)).fetchone()["c"]
+        if note_count == 0:
+            db.execute(
+                "INSERT INTO notes (title, content, author_id) VALUES (?, ?, ?)",
+                ("Welcome note", "This is baseline sample data for the lab.", demo_user["id"]),
+            )
+            db.execute(
+                "INSERT INTO notes (title, content, author_id) VALUES (?, ?, ?)",
+                ("Second note", "Use this account to test workflow and security scenarios.", demo_user["id"]),
+            )
+            db.commit()
+
+        print("Seeded lab data: demo / demo123 with sample notes.")

@@ -33,6 +33,8 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 flask --app run.py init-db
+flask --app run.py create-admin
+flask --app run.py seed-lab
 python run.py
 ```
 
