@@ -136,11 +136,3 @@ Reports aim to be readable like real pentest findings:
 This repository contains intentionally vulnerable code **for educational purposes**.  
 Use only in environments you own or have explicit permission to test.
 
----
-
-## License
-Choose one:
-- MIT (simple and common), or
-- Apache-2.0
-
-*(I’ll add the actual LICENSE file when you pick.)*
