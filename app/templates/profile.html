@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Profile</h2>
+{% if user['avatar_path'] %}
+  <img src="{{ url_for('main.uploaded_file', filename=user['avatar_path']) }}" alt="avatar" width="120" />
+{% endif %}
+<form method="post" enctype="multipart/form-data">
+  <label>Bio
+    <textarea name="bio" rows="4">{{ user['bio'] }}</textarea>
+  </label>
+  <label>Avatar
+    <input type="file" name="avatar" accept=".png,.jpg,.jpeg,.gif" />
+  </label>
+  <button type="submit">Save profile</button>
+</form>
+{% endblock %}
